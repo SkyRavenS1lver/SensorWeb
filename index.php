@@ -1,3 +1,12 @@
+
+<?php
+// To call this page, in the browser type:
+// http://localhost/
+include("dbconn.php");
+$ref = 'sensor1';
+$datas = $database->getReference($ref)->getSnapshot()->getValue();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,67 +15,78 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Home | Registration and Login System </title>
+        <title>Dashboard | Sensor Website</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
-    <body>
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.php">Registration and Login System</a>
-            <!-- Sidebar Toggle-->
-
-            <!-- Navbar Search-->
-          
-        </nav>
+    <body class="sb-nav-fixed">
+      <?php include_once('includes/navbar.php');?>
         <div id="layoutSidenav">
-       
+          <?php include_once('includes/sidebar.php');?>
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">   User Registration & Login and User Management System With admin panel</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-              
-                        </ol>
-        <div class="row" >
-                            <div class="col-xl-4 col-md-6" >
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Not Registers Yet</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="signup.php">Signup Here</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-<div class="col-xl-4 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Already Registered</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="login.php">Login Here</a>
-                                    </div>
-                                </div>
-                            </div>
+                        <h1 class="mt-4">Dashboard</h1>
+                        <hr />
+                        <div id="curve_chart" style="width: 100rem; height: 50rem"></div>
+                        </div>
 
-<div class="col-xl-4 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Admin Panel</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="admin">Login Here</a>
-                          
-                                    </div>
-                                </div>
-                            </div>
-
-                            </div>
-                        <div style="height: 100vh"></div>
-            
+                        </div>
+                   
                     </div>
                 </main>
-   <?php include_once('includes/footer.php');?>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="assets/demo/chart-area-demo.js"></script>
+        <script src="assets/demo/chart-bar-demo.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="js/datatables-simple-demo.js"></script>
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+            import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
+            const firebaseConfig = {
+                apiKey: "AIzaSyCSAQh_Ng6VKKfCQ9N3Lzstf-Ej1t-yzPQ",
+                authDomain: "sensorprojects-17392.firebaseapp.com",
+                databaseURL: "https://sensorprojects-17392-default-rtdb.firebaseio.com",
+                projectId: "sensorprojects-17392",
+                storageBucket: "sensorprojects-17392.appspot.com",
+                messagingSenderId: "652184584795",
+                appId: "1:652184584795:web:86f032dfd574532919f57e",
+                measurementId: "G-J21F3311FV"
+            };
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+            const db = getDatabase(app);
+            const refs = ref(db, 'sensor1');
+            var firebaseData = [['Waktu', 'Pencahayaan']];
+            onValue(refs, (snapshot) => {
+            firebaseData = snapshot;
+            drawChart();
+            });
+            function drawChart() {
+                var temp = [['Waktu', 'Pencahayaan']];
+                firebaseData.forEach(child=>{
+                        temp.push([child.val().TimeStamp, parseFloat(child.val().Light)]);
+                    });
+                console.log(temp);
+                var data = google.visualization.arrayToDataTable(temp);
+                var options = {
+                    title: 'Pencahayaan',
+                    curveType: 'function',
+                    legend: { position: 'bottom' }
+                };
+                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+                chart.draw(data, options);
+            }
+        </script>
     </body>
 </html>
