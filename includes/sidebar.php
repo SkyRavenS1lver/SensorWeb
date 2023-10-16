@@ -14,38 +14,32 @@
                             </a>
                             <div class="collapse" id="collapseExample">
                                 <div class="nav-link row">
-                                <a class="nav-link" href="/admins/pencahayaan">
+                                <a class="nav-link" href="pencahayaan.php">
                                     Pencahayaan
                                 </a>
-                                <a class="nav-link" href="/admins/lembapTanah">
+                                <a class="nav-link" href="lembapTanah.php">
                                     Persentase Kelembapan Tanah
                                 </a>
-                                <a class="nav-link" href="/admins/kualitas">
+                                <a class="nav-link" href="kualitas.php">
                                     Kualitas Udara
                                 </a>
-                                <a class="nav-link" href="/admins/curah">
+                                <a class="nav-link" href="curah.php">
                                     Curah Hujan
                                 </a>
-                                <a class="nav-link" href="/admins/lembapUdara">
+                                <a class="nav-link" href="lembapUdara.php">
                                     Kelembapan Udara
                                 </a>
-                                <a class="nav-link" href="/admins/temp1">
+                                <a class="nav-link" href="temp1.php">
                                     Temperatur
                                 </a>
-                                <a class="nav-link" href="/admins/pressure">
+                                <a class="nav-link" href="pressure.php">
                                     Tekanan
                                 </a>
-                                <a class="nav-link" href="/admins/altitude">
+                                <a class="nav-link" href="altitude.php">
                                     Approx Altitude
                                 </a>
                                 </div>
                             </div>
-
-
-                            <a class="nav-link" href="logout.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-sign-out-alt"></i></div>
-                                Signout
-                            </a>
                         </div>
                     </div>
                 
