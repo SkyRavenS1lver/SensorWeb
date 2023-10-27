@@ -50,19 +50,20 @@ $datas = $database->getReference($ref)->getSnapshot()->getValue();
             import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
             import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
             import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
-            const firebaseConfig = {
-                apiKey: "AIzaSyCSAQh_Ng6VKKfCQ9N3Lzstf-Ej1t-yzPQ",
-                authDomain: "sensorprojects-17392.firebaseapp.com",
-                databaseURL: "https://sensorprojects-17392-default-rtdb.firebaseio.com",
-                projectId: "sensorprojects-17392",
-                storageBucket: "sensorprojects-17392.appspot.com",
-                messagingSenderId: "652184584795",
-                appId: "1:652184584795:web:86f032dfd574532919f57e",
-                measurementId: "G-J21F3311FV"
-            };
             google.charts.load('current', {'packages':['corechart']});
             google.charts.setOnLoadCallback(drawChart);
             // Initialize Firebase
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyC6WXLL3Sym3ENfPo9_YaIn5CoOCv4RFnc",
+                authDomain: "sensor-web-da2ad.firebaseapp.com",
+                databaseURL: "https://sensor-web-da2ad-default-rtdb.firebaseio.com",
+                projectId: "sensor-web-da2ad",
+                storageBucket: "sensor-web-da2ad.appspot.com",
+                messagingSenderId: "789387599423",
+                appId: "1:789387599423:web:92cad2149c61bc59c7e28a",
+                measurementId: "G-7T48XYK51N"
+            };
             const app = initializeApp(firebaseConfig);
             const analytics = getAnalytics(app);
             const db = getDatabase(app);
