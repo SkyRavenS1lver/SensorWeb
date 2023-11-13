@@ -24,6 +24,7 @@ switch ($request_method) {
 
       $hitung = count(array_intersect_key($data, $arrcheckpost));
       if($hitung == count($arrcheckpost)) {
+        date_default_timezone_set('Asia/Jakarta');
           $postData = [
               "Light"                       => "$data[Light]",
               "PersentaseKelembapanTanah"   => "$data[PersentaseKelembapanTanah]",
